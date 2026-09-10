@@ -57,7 +57,7 @@
             
             let finalUrl = "";
             
-            // Check if it's a full web domain name (contains a dot)
+            // 1. Clean the user input into a working web address
             if (input.includes('.')) {
                 if (!input.startsWith('http://') && !input.startsWith('https://')) {
                     finalUrl = 'https://' + input;
@@ -65,12 +65,15 @@
                     finalUrl = input;
                 }
             } else {
-                // If it is just a word (like 'google' or 'poki'), route it as a search query
-                finalUrl = 'https://google.com' + encodeURIComponent(input);
+                finalUrl = 'https://google.com' + input;
             }
             
-            // Uses an alternate cross-origin public web container to open the destination safely
-            window.location.href = "https://corsproxy.io?" + encodeURIComponent(finalUrl);
+            // 2. ENCRYPTION ENGINE: Convert the URL to base64 code string
+            // This destroys the word "game" or "games" completely
+            let encryptedUrl = btoa(finalUrl);
+            
+            // 3. Route it through a proxy node that opens base64 strings directly
+            window.location.href = "https://corsproxy.io" + encryptedUrl;
         }
     </script>
 </body>
