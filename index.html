@@ -3,32 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Educational Dashboard</title>
+    <title>Syllabus & Course Management Portal</title>
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding-top: 100px; background-color: #f4f4f9; }
-        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        input[type="text"] { width: 80%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
-        button { padding: 12px 24px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-        button:hover { background-color: #0056b3; }
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; margin: 0; padding: 0; color: #333; }
+        .school-header { background-color: #0b2240; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid #f2a900; }
+        .school-logo { font-weight: 600; font-size: 18px; letter-spacing: 0.5px; }
+        .school-nav a { color: #ccd6f6; text-decoration: none; margin-left: 20px; font-size: 14px; }
+        .container { max-width: 700px; margin: 60px auto; padding: 20px; }
+        .portal-card { background: white; padding: 40px; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 5px solid #0b2240; position: relative; overflow: hidden; }
+        h2 { color: #0b2240; margin-top: 0; font-size: 24px; }
+        p { color: #666; font-size: 14px; line-height: 1.6; }
+        .input-group { margin: 25px 0; text-align: left; }
+        label { display: block; font-size: 12px; font-weight: 600; color: #4a5568; margin-bottom: 8px; text-transform: uppercase; }
+        input[type="text"] { width: 100%; padding: 14px; border: 1px solid #cbd5e0; border-radius: 4px; font-size: 15px; box-sizing: border-box; background-color: #f7fafc; }
+        input[type="text"]:focus { outline: none; border-color: #0b2240; background-color: white; }
+        button { width: 100%; padding: 14px; background-color: #0b2240; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: 600; transition: background 0.2s; }
+        button:hover { background-color: #1a365d; }
+        .marquee-container { width: 100%; background-color: #111; padding: 10px 0; margin-top: 30px; border-radius: 4px; overflow: hidden; border: 2px dashed #f2a900; }
+        .sliding-mo { font-family: 'Press Start 2P', monospace; font-size: 20px; font-weight: bold; color: #39ff14; white-space: nowrap; display: inline-block; animation: bounceText 6s linear infinite alternate; text-shadow: 3px 3px 0px #ff007f; }
+        @keyframes bounceText { 0% { transform: translateX(0%); } 100% { transform: translateX(80%); } }
     </style>
 </head>
 <body>
+
+    <div class="school-header">
+        <div class="school-logo">🏫 District E-Learning Gateway</div>
+        <div class="school-nav"><a href="#">Syllabus</a><a href="#">Grades</a><a href="#">Resources</a></div>
+    </div>
+
     <div class="container">
-        <h2>Student Learning Resource Portal</h2>
-        <p>Enter the destination link below to tunnel through the educational gateway:</p>
-        <input type="text" id="targetUrl" placeholder="https://wikipedia.org">
-        <br>
-        <button onclick="launchProxy()">Launch Secure Node</button>
+        <div class="portal-card">
+            <h2>Course Resource & Syllabus Fetcher</h2>
+            <p>Access school-approved cloud archives and research databases. Enter the directory name or pathway URL below to establish a secure search stream.</p>
+            
+            <div class="input-group">
+                <label for="targetUrl">Academic Database Search / Web Path</label>
+                <input type="text" id="targetUrl" placeholder="Type a site name (like google) or a full link...">
+            </div>
+            
+            <button onclick="launchProxy()">Request Document Stream</button>
+
+            <div class="marquee-container">
+                <div class="sliding-mo">⚡ MADE BY MO ⚡</div>
+            </div>
+        </div>
     </div>
 
     <script>
         function launchProxy() {
-            let url = document.getElementById('targetUrl').value.trim();
-            if (!url) { alert('Please enter a website URL'); return; }
-            if (!url.startsWith('http://') && !url.startsWith('https://')) { url = 'https://' + url; }
+            let input = document.getElementById('targetUrl').value.trim();
+            if (!input) { alert('Please enter a website name or URL'); return; }
             
-            // Uses a public cloudflare mirror system to pull the static assets safely
-            window.location.href = "https://googleusercontent.com" + encodeURIComponent(url);
+            let finalUrl = "";
+            
+            // Check if it's a full web domain name (contains a dot)
+            if (input.includes('.')) {
+                if (!input.startsWith('http://') && !input.startsWith('https://')) {
+                    finalUrl = 'https://' + input;
+                } else {
+                    finalUrl = input;
+                }
+            } else {
+                // If it is just a word (like 'google' or 'poki'), route it as a search query
+                finalUrl = 'https://google.com' + encodeURIComponent(input);
+            }
+            
+            // Uses an alternate cross-origin public web container to open the destination safely
+            window.location.href = "https://corsproxy.io?" + encodeURIComponent(finalUrl);
         }
     </script>
 </body>
