@@ -3,163 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syllabus & Course Management Portal v1.02</title>
-    <!-- Old-school fonts for the ultimate retro operating system style -->
+    <title>Syllabus & Course Management Portal v3.1</title>
     <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        /* Retro grid gaming background disguised with a slate grey workspace */
-        body { 
-            font-family: 'Courier Prime', monospace; 
-            background-color: #55aaaa; /* Classic 90s Desktop Teal */
-            background-image: linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
-            background-size: 20px 20px;
-            margin: 0; 
-            padding: 0; 
-            color: #000;
+        /* BASE LAYER AND ANIMATED RETRO GAME SCENE */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Courier Prime', monospace;
+            background: linear-gradient(to bottom, #ff4500 0%, #ff8c00 40%, #edafb8 70%, #4a5568 100%);
+            position: relative;
         }
 
-        /* Windows 95 style header bar */
-        .school-header {
-            background-color: #c0c0c0;
-            padding: 4px 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #808080;
-            box-shadow: inset 1px 1px 0px #fff;
+        /* MASSIVE FLYING RETRO MARQUEE IN THE SKY */
+        .sky-marquee-lane {
+            position: absolute;
+            top: 12%; 
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 2; 
+            pointer-events: none; 
         }
-        .school-logo { font-weight: bold; font-size: 14px; font-family: sans-serif; color: #000; }
-        .school-nav span { background: #d9d9d9; padding: 2px 8px; font-size: 12px; border: 1px solid #808080; margin-left: 5px; cursor: pointer; font-family: sans-serif;}
-
-        .container { max-width: 650px; margin: 50px auto; padding: 10px; }
         
-        /* The main app frame styled like a retro software window */
+        .flying-mo-text {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 55px; 
+            font-weight: bold;
+            color: #ff007f; 
+            display: inline-block;
+            animation: skyFlyThrough 12s linear infinite;
+            
+            /* Double-Layered Effect */
+            text-shadow: 
+                -3px -3px 0px #7000ff,  
+                 3px -3px 0px #7000ff,
+                -3px  3px 0px #7000ff,
+                 3px  3px 0px #7000ff,
+                 6px  6px 0px #000000; 
+            letter-spacing: 4px;
+        }
+
+        @keyframes skyFlyThrough {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
+        }
+
+        /* Moving Sun */
+        .retro-sunset {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle, #ffea00 20%, #ff3300 80%);
+            border-radius: 50%;
+            bottom: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 40px #ff8c00;
+            animation: sunPulse 4s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+        @keyframes sunPulse { 0% { transform: translateX(-50%) scale(1); } 100% { transform: translateX(-50%) scale(1.08); } }
+
+        /* Moving Trees */
+        .pixel-tree {
+            position: absolute;
+            bottom: 15%;
+            width: 0; height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 120px solid #1a4314;
+            transform-origin: bottom center;
+            animation: windSway 3s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+        .tree-left { left: 10%; animation-delay: 0.5s; }
+        .tree-right { right: 10%; }
+        @keyframes windSway { 0% { transform: rotate(-3deg); } 100% { transform: rotate(3deg); } }
+
+        /* Ground Floor */
+        .park-ground {
+            position: absolute;
+            bottom: 0; width: 100%; height: 18%;
+            background: #2d5a27;
+            border-top: 6px solid #4f7942;
+            z-index: 3;
+        }
+
+        /* Bench with Guy & Music Player */
+        .bench-guy-zone {
+            position: absolute;
+            bottom: 12%; left: 15%;
+            width: 120px; height: 60px;
+            background: #8b4513;
+            border-radius: 4px;
+            border: 3px solid #5c2e0b;
+            z-index: 4;
+        }
+        .bench-guy-zone::before {
+            content: "🎧🕺";
+            font-size: 30px;
+            position: absolute;
+            top: -32px; left: 15px;
+            animation: musicHeadBang 0.6s ease-in-out infinite alternate;
+        }
+        .audio-wave {
+            position: absolute;
+            top: -45px; left: 20px;
+            font-size: 10px; color: #00ffff;
+            animation: waveFlicker 0.3s infinite;
+        }
+        @keyframes musicHeadBang { 0% { transform: translateY(0) rotate(-4deg); } 100% { transform: translateY(-4px) rotate(4deg); } }
+        @keyframes waveFlicker { 0%, 100% { content: " ▃ ▅ █"; } 50% { content: " █ ▅ ▃"; } }
+
+        /* Guy Walking with 3-Scoop Ice Cream */
+        .ice-cream-walker {
+            position: absolute;
+            bottom: 8%;
+            font-size: 35px;
+            z-index: 5;
+            animation: walkAcross 16s linear infinite;
+        }
+        .ice-cream-walker::after { content: "🚶🍦"; }
+        @keyframes walkAcross { 0% { left: -10%; } 100% { left: 110%; } }
+
+        /* Leaping Dog & Frisbee */
+        .dog-frisbee-zone {
+            position: absolute;
+            bottom: 22%; right: 15%;
+            font-size: 28px;
+            z-index: 1;
+            animation: dogLeap 5s ease-in-out infinite alternate;
+        }
+        .dog-frisbee-zone::after { content: "🐕 🥏"; }
+        @keyframes dogLeap { 
+            0% { transform: translate(0, 0) scaleX(1); } 
+            50% { transform: translate(-100px, -60px) scaleX(1); }
+            51% { transform: translate(-100px, -60px) scaleX(-1); }
+            100% { transform: translate(20px, 0) scaleX(-1); }
+        }
+
+        /* PORTAL CONTROL PANEL (SMACK IN MIDDLE) */
+        .container { 
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; max-width: 530px; 
+            z-index: 10; 
+        }
         .portal-card { 
             background: #c0c0c0; 
             padding: 4px;
             border: 3px solid;
-            border-color: #fff #808080 #808080 #fff; /* 3D bevel look */
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            border-color: #fff #808080 #808080 #fff;
+            box-shadow: 5px 5px 30px rgba(0,0,0,0.6);
         }
-
-        /* Blue Windows Title Bar */
         .window-title-bar {
             background: linear-gradient(90deg, #000080, #1084d0);
-            color: white;
-            padding: 6px 10px;
-            font-weight: bold;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            color: white; padding: 6px 10px; font-weight: bold; font-size: 13px;
+            display: flex; justify-content: space-between; align-items: center;
             font-family: sans-serif;
         }
-        .window-controls { background: #c0c0c0; color: black; padding: 1px 6px; border: 1px solid #808080; font-size: 10px; font-weight: bold; }
-
-        .window-content {
-            padding: 30px;
-            background: #d9d9d9;
-            border: 2px solid;
-            border-color: #808080 #fff #fff #808080;
-            margin-top: 4px;
-        }
-
-        h2 { color: #000; margin-top: 0; font-size: 20px; font-weight: bold; text-transform: uppercase; }
-        p { color: #222; font-size: 13px; line-height: 1.5; font-weight: bold; }
-        
-        .input-group { margin: 25px 0; text-align: left; }
-        label { display: block; font-size: 12px; font-weight: bold; color: #000; margin-bottom: 8px; }
-        
-        /* Retro input styling */
+        .window-content { padding: 25px; background: #d9d9d9; border: 2px solid; border-color: #808080 #fff #fff #808080; }
+        h2 { margin-top: 0; font-size: 17px; font-weight: bold; text-transform: uppercase; color: #000; }
+        p { color: #111; font-size: 12px; font-weight: bold; }
         input[type="text"] { 
-            width: 100%; 
-            padding: 10px; 
-            border: 3px solid;
-            border-color: #808080 #fff #fff #808080;
-            font-size: 14px; 
-            box-sizing: border-box;
-            background-color: #fff;
-            font-family: 'Courier Prime', monospace;
-            font-weight: bold;
+            width: 100%; padding: 12px; border: 3px solid; border-color: #808080 #fff #fff #808080;
+            font-size: 14px; box-sizing: border-box; background-color: #fff; font-family: 'Courier Prime', monospace; font-weight: bold;
         }
-        
-        /* Beveled classic submit button */
         button { 
-            width: 100%;
-            padding: 12px; 
-            background-color: #c0c0c0; 
-            color: #000; 
-            border: 3px solid;
-            border-color: #fff #808080 #808080 #fff;
-            cursor: pointer; 
-            font-size: 15px; 
-            font-weight: bold;
-            font-family: 'Courier Prime', monospace;
+            width: 100%; padding: 12px; background-color: #c0c0c0; color: #000; border: 3px solid;
+            border-color: #fff #808080 #808080 #fff; cursor: pointer; font-size: 14px; font-weight: bold; font-family: 'Courier Prime', monospace; margin-top: 15px;
         }
-        button:active {
-            border-color: #808080 #fff #fff #808080;
-            padding: 13px 11px 11px 13px;
-        }
-
-        /* --- THE SLIDING RETRO ARCADE MARQUEE --- */
-        .marquee-container {
-            width: 100%;
-            background-color: #000; /* Dark arcade cabinet space */
-            padding: 12px 0;
-            margin-top: 30px;
-            border: 3px solid;
-            border-color: #808080 #fff #fff #808080;
-            overflow: hidden;
-        }
-        .sliding-mo {
-            font-family: 'Press Start 2P', monospace; /* Heavy 8-bit text */
-            font-size: 16px;
-            color: #00ffff; /* Cyberpunk Neon Cyan */
-            white-space: nowrap;
-            display: inline-block;
-            animation: bounceText 5s linear infinite alternate;
-            text-shadow: 2px 2px 0px #ff00ff; /* Hot pink neon 3D accent */
-        }
-
-        @keyframes bounceText {
-            0% { transform: translateX(5%); }
-            100% { transform: translateX(65%); }
-        }
+        button:active { border-color: #808080 #fff #fff #808080; }
     </style>
 </head>
 <body>
 
-    <!-- OS Style Fake Header -->
-    <div class="school-header">
-        <div class="school-logo">📁 Academic_Network_Client.exe</div>
-        <div class="school-nav">
-            <span>File</span><span>Edit</span><span>Help</span>
-        </div>
+    <!-- Flying Arcade Text in the Sky (Cleaned Version) -->
+    <div class="sky-marquee-lane">
+        <div class="flying-mo-text">BY MO &nbsp;&nbsp;&nbsp;&nbsp; BY MO &nbsp;&nbsp;&nbsp;&nbsp; BY MO</div>
     </div>
 
+    <!-- Retro Landscape Background Components -->
+    <div class="retro-sunset"></div>
+    <div class="pixel-tree tree-left"></div>
+    <div class="pixel-tree tree-right"></div>
+    <div class="dog-frisbee-zone"></div>
+    <div class="bench-guy-zone"><span class="audio-wave"></span></div>
+    <div class="ice-cream-walker"></div>
+    <div class="park-ground"></div>
+
+    <!-- Central Control Box Frame -->
     <div class="container">
-        <!-- Main Windows 98 Box Frame -->
         <div class="portal-card">
             <div class="window-title-bar">
-                <span>📚 Education Gateway Directory v1.02</span>
-                <span class="window-controls">X</span>
+                <span>📚 Education Gateway Core Interface</span>
+                <span style="background:#c0c0c0; color:black; padding:1px 5px; font-size:10px; border:1px solid #808080;">X</span>
             </div>
-            
             <div class="window-content">
-                <h2>System Research Archive</h2>
-                <p>Establishing an active baseline data link. Enter your target destination pathway domain keywords into the command array line configuration interface below.</p>
+                <h2>Network Directory Hub</h2>
+                <p>Run secure system requests. Enter your target network domain keywords below to compile the sandbox stream container:</p>
                 
-                <div class="input-group">
-                    <label>> TERMINAL_INPUT_PATHWAYS:</label>
-                    <input type="text" id="targetUrl" placeholder="Type name (google) or web link...">
-                </div>
-                
-                <button onclick="launchProxy()">[ RUN APPLICATION ]</button>
-
-                <!-- Arcade signature marquee moving back and forth -->
-                <div class="marquee-container">
-                    <div class="sliding-mo">🎮 MO's SYSTEM 🎮</div>
-                </div>
+                <input type="text" id="targetUrl" placeholder="Type shortcut name or destination web url...">
+                <button onclick="launchProxy()">[ INITIALIZE RUN SCHEME ]</button>
             </div>
         </div>
     </div>
@@ -167,7 +217,7 @@
     <script>
         function launchProxy() {
             let input = document.getElementById('targetUrl').value.trim();
-            if (!input) { alert('ERROR: System requires a target data path.'); return; }
+            if (!input) { alert('ERROR: Input pathway is empty.'); return; }
             
             let finalUrl = "";
             if (input.includes('.')) {
@@ -177,13 +227,13 @@
                     finalUrl = input;
                 }
             } else {
-                finalUrl = 'https://google.com' + input;
+                finalUrl = 'https://google.com' + encodeURIComponent(input);
             }
             
-            // Encrypts text cleanly using the Base64 mask block engine
-            let encryptedUrl = btoa(finalUrl);
-            window.location.href = "https://corsproxy.io" + encryptedUrl;
+            let encrypted = btoa(finalUrl);
+            window.location.href = "https://corsproxy.io" + encrypted;
         }
     </script>
 </body>
 </html>
+
