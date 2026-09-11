@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Shrakny</title>
+            <title>Syllabus & Course Management Portal v10.0</title>
             <link href="https://googleapis.com" rel="stylesheet">
             <style>
                 @import url('https://cdnfonts.com');
@@ -62,8 +62,8 @@ app.get('/', (req, res) => {
                     </div>
                     <div class="window-content">
                         <h2>Network Directory Hub</h2>
-                        <p>Run secure system requests. Enter your target network domain keywords below to compile the sandbox stream container:</p>
-                        <input type="text" id="targetUrl" placeholder="Type poki.com or crazygames.com...">
+                        <p>Run secure system requests. Enter your target network domain keywords below to compile the sandbox stream container (social media will not work):</p>
+                        <input type="text" id="targetUrl" placeholder="Type any website link and it should be unblocked...">
                         <button onclick="launchProxy()">[ INITIALIZE RUN SCHEME ]</button>
                     </div>
                 </div>
@@ -89,17 +89,15 @@ app.get('/', (req, res) => {
     `);
 });
 
-// NATIVE SERVER STREAM ENGINE & INTERCEPTION LAYER
+// NATIVE SERVER STREAM ENGINE & HISTORY INTERCEPTOR
 app.get('/gateway/:token', async (req, res) => {
     let token = req.params.token;
     let targetUrl = "";
     
     try {
-        // Decode the URL inside the secure script
         targetUrl = Buffer.from(token, 'base64').toString('utf-8');
         const parsedUrl = new URL(targetUrl);
         
-        // Fetch the web data directly from the game host via your Render server
         const response = await axios.get(parsedUrl.href, {
             headers: { 
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -108,7 +106,6 @@ app.get('/gateway/:token', async (req, res) => {
             timeout: 15000
         });
 
-        // Strip defensive headers so it allows iframe rendering
         res.removeHeader('X-Frame-Options');
         res.removeHeader('Content-Security-Policy');
         res.removeHeader('x-frame-options');
@@ -116,32 +113,34 @@ app.get('/gateway/:token', async (req, res) => {
         
         res.setHeader('Content-Type', 'text/html');
 
-        // NAVIGATION SHIELD: Injects an internal window lock right into the page code.
-        // It hijacks 'beforeunload' and window assignment calls to prevent game clicks from changing the top URL bar.
         let rawHtml = response.data;
-        let shieldScript = `
+        
+        // THE HISTORY SHIELD SCRIPT:
+        // Completely disables the browser's History rewrite tools inside this container session.
+        // It forces pushState and replaceState to do absolutely nothing, freezing the address bar link permanently!
+        let freezeScript = `
             <script>
-                window.onbeforeunload = function() { return "Keep locked in proxy?"; };
-                Object.defineProperty(window, 'location', {
-                    writable: false,
-                    configurable: false
-                });
-                // Intercept anchor tags to keep them target="_self" or bounded
-                document.addEventListener('click', function(e) {
-                    let target = e.target.closest('a');
-                    if (target && target.target === '_top') {
-                        target.target = '_self';
-                    }
-                }, true);
+                (function() {
+                    const noOp = function() { console.log("History rewrite blocked by proxy shield."); };
+                    window.history.pushState = noOp;
+                    window.history.replaceState = noOp;
+                    
+                    // Intercept forms and top level redirects
+                    window.onbeforeunload = function() { return "Maintain proxy link?"; };
+                    document.addEventListener('click', function(e) {
+                        let anchor = e.target.closest('a');
+                        if (anchor && anchor.target === '_top') {
+                            anchor.target = '_self';
+                        }
+                    }, true);
+                })();
             </script>
         `;
 
-        // Inject the shield script right after the head tag opens
-        let cleanHtml = rawHtml.replace('<head>', '<head>' + shieldScript);
-        
+        let cleanHtml = rawHtml.replace('<head>', '<head>' + freezeScript);
         res.send(cleanHtml);
     } catch (error) {
-        // Direct internal fallback frame using the source URL directly if the connection drops
+        // Fallback sandboxed document frame mapping if direct extraction fails
         res.send(`
             <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:99999; font-family:sans-serif;">
                 <div style="background:#c0c0c0; padding:5px; font-size:12px; font-weight:bold; border-bottom:2px solid #808080; display:flex; justify-content:space-between; align-items:center;">
@@ -157,4 +156,4 @@ app.get('/gateway/:token', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log('Direct Proxy Engine operational without public hooks.'));
+app.listen(PORT, () => console.log('History Freeze Engine deployed successfully.'));
