@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
             <div class="video-bg-wrapper">
                 <!-- Change the src="..." attribute below to swap your MP4 wallpapers anytime -->
                 <video autoplay loop muted playsinline>
-                    <source src="https://motionbgs.com/media/324/cyberpunk-mclaren-on-a-rainy-night.960x540.mp4" type="video/mp4">
+                    <source src="https://mylivewallpapers.com/wp-content/uploads/Nature/PREVIEW-Retrowave-Sunset-Beach.mp4" type="video/mp4">
                 </video>
             </div>
 
