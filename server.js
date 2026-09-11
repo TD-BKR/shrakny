@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
         <body>
             <div class="video-bg-wrapper">
                 <video autoplay loop muted playsinline>
-                    <source src="https://motionbgs.com" type="video/mp4">
+                    <source src="https://motionbgs.com/media/5648/retro-pixel-warrior.960x540.mp4">
                 </video>
             </div>
 
@@ -64,7 +64,7 @@ app.get('/', (req, res) => {
                     <div class="window-content">
                         <h2>Network Directory Hub</h2>
                         <p>Run secure system requests. Enter your target network domain keywords below to compile the sandbox stream container:</p>
-                        <input type="text" id="targetUrl" placeholder="Type poki.com or crazygames.com...">
+                        <input type="text" id="targetUrl" placeholder="Type any website and it should be unblocked...">
                         <button onclick="launchProxy()">[ INITIALIZE RUN SCHEME ]</button>
                     </div>
                 </div>
