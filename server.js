@@ -11,19 +11,23 @@ app.get('/', (req, res) => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Syllabus & Course Management Portal v6.1</title>
+            <title>Syllabus & Course Management Portal v7.0</title>
             <link href="https://googleapis.com" rel="stylesheet">
             <style>
                 body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Courier Prime', monospace; background-color: #050515; position: relative; }
                 
-                /* EXACT RENDER OF THE OUTRUN NEON CAR BACKDROP */
-                .synthwave-bg { 
-                    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-                    background-image: url('https://imgur.com'); /* Live structural image address matching your reference */
-                    background-size: cover;
-                    background-position: center;
-                    z-index: 1; 
-                    filter: brightness(0.8) contrast(1.1);
+                /* FULL CONTAINER FOR THE LIVE MP4 CHROMATIC VIDEO LAYER */
+                .video-bg-wrapper {
+                    position: absolute;
+                    top: 0; left: 0;
+                    width: 100%; height: 100%;
+                    z-index: 1;
+                    overflow: hidden;
+                }
+                .video-bg-wrapper video {
+                    width: 100%; height: 100%;
+                    object-fit: cover; /* Forces the video to fill the school screen layout cleanly */
+                    filter: brightness(0.75) contrast(1.1); /* Darkens slightly so form inputs stay readable */
                 }
 
                 /* GIANT ARCADE MARQUEE SMACK IN THE MIDDLE */
@@ -45,10 +49,21 @@ app.get('/', (req, res) => {
             </style>
         </head>
         <body>
-            <div class="synthwave-bg"></div>
-            <div class="giant-marquee-lane">
-                <div class="giant-mo-text">BY MA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By MA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MA</div>
+
+            <!-- NATIVE LIVE BACKGROUND PLAYER FIELD -->
+            <div class="video-bg-wrapper">
+                <!-- Change the src="..." attribute below to swap your MP4 wallpapers anytime -->
+                <video autoplay loop muted playsinline>
+                    <source src="https://motionbgs.com/media/324/cyberpunk-mclaren-on-a-rainy-night.960x540.mp4" type="video/mp4">
+                </video>
             </div>
+
+            <!-- GIANT MARQUEE TEXT RUNNING ACROSS THE CENTER -->
+            <div class="giant-marquee-lane">
+                <div class="giant-mo-text">BY MO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MO</div>
+            </div>
+
+            <!-- Central Form Panel Context -->
             <div class="container">
                 <div class="portal-card">
                     <div class="window-title-bar">
@@ -118,4 +133,4 @@ app.get('/gateway/:token', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log('Final Encrypted Engine Active.'));
+app.listen(PORT, () => console.log('MP4 Server Engine Configured.'));
