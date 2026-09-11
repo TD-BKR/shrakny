@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
                 @keyframes skyFlyThrough { 0% { transform: translateX(-100%); } 100% { transform: translateX(100vw); } }
                 
                 .container { position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 530px; z-index: 10; }
-                .portal-card { background: #c0c0c0; padding: 4px; border: 3px solid; border-color: #fff #808080 #808080 #fff; box-shadow: 5px 5px 30px rgba(0,0,0,0.8); }
+                .portal-card { background: #000000; padding: 4px; border: 3px solid; border-color: #fff #808080 #808080 #fff; box-shadow: 5px 5px 30px rgba(0,0,0,0.8); }
                 .window-title-bar { background: linear-gradient(90deg, #000080, #1084d0); color: white; padding: 6px 10px; font-weight: bold; font-size: 13px; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; }
                 .window-content { padding: 22px; background: #00000; border: 2px solid; border-color: #808080 #fff #fff #808080; }
                 h2 { margin-top: 0; font-size: 16px; font-weight: bold; text-transform: uppercase; color: #fff; }
