@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
                 /* GIANT ARCADE MARQUEE SMACK IN THE MIDDLE */
                 .giant-marquee-lane { position: absolute; top: 32%; width: 100%; overflow: hidden; white-space: nowrap; z-index: 5; pointer-events: none; }
                 .giant-mo-text {
-                    font-family: 'Press Start 2P', monospace; font-size: 80px; font-weight: bold; color: #ff3300; display: inline-block; animation: skyFlyThrough 8s linear infinite; letter-spacing: 6px;
+                    font-family: 'Press Start 2P', monospace; font-size: 80px; font-weight: bold; color: #00FFFF; display: inline-block; animation: skyFlyThrough 8s linear infinite; letter-spacing: 6px;
                     text-shadow: 0px 3px 0px #ffaa00, -1px 4px 0px #111122, -2px 6px 0px #111122, -3px 8px 0px #111122, -4px 10px 0px #111122, -5px 12px 0px #111122, -6px 14px 0px #111122, -7px 16px 0px #111122, -8px 18px 0px #111122, -12px 24px 10px rgba(0, 0, 0, 0.7);
                 }
                 @keyframes skyFlyThrough { 0% { transform: translateX(-100%); } 100% { transform: translateX(100vw); } }
@@ -44,7 +44,12 @@ app.get('/', (req, res) => {
                 .window-content { padding: 22px; background: #d9d9d9; border: 2px solid; border-color: #808080 #fff #fff #808080; }
                 h2 { margin-top: 0; font-size: 16px; font-weight: bold; text-transform: uppercase; color: #000; }
                 p { color: #111; font-size: 11px; font-weight: bold; margin-bottom: 15px; }
-                input[type="text"] { width: 100%; padding: 12px; border: 3px solid; border-color: #808080 #fff #fff #808080; font-size: 14px; box-sizing: border-box; background-color: #fff; font-family: 'Courier Prime', monospace; font-weight: bold; }
+                input[type="text"] { 
+                width: 100%; padding: 12px; border: 3px solid; border-color: #808080 #fff #fff #808080;
+                font-size: 14px; box-sizing: border-box;
+                background-color: #000000; 
+                color: #ffffff
+                font-family: 'Courier Prime', monospace; font-weight: bold; }
                 button { width: 100%; padding: 12px; background-color: #c0c0c0; color: #000; border: 3px solid; border-color: #fff #808080 #808080 #fff; cursor: pointer; font-size: 14px; font-weight: bold; font-family: 'Courier Prime', monospace; margin-top: 15px; }
             </style>
         </head>
@@ -73,7 +78,7 @@ app.get('/', (req, res) => {
                     <div class="window-content">
                         <h2>Network Directory Hub</h2>
                         <p>Run secure system requests. Enter your target network domain keywords below to compile the sandbox stream container:</p>
-                        <input type="text" id="targetUrl" placeholder="Type poki.com or crazygames.com...">
+                        <input type="text" id="targetUrl" placeholder="Type any website link and it should work unblocked...">
                         <button onclick="launchProxy()">[ INITIALIZE RUN SCHEME ]</button>
                     </div>
                 </div>
