@@ -47,7 +47,7 @@ app.get('/', (req, res) => {
         <body>
             <div class="synthwave-bg"></div>
             <div class="giant-marquee-lane">
-                <div class="giant-mo-text">BY MO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By MA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MA</div>
+                <div class="giant-mo-text">BY MA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; By MA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MA</div>
             </div>
             <div class="container">
                 <div class="portal-card">
