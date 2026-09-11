@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Syllabus & Course Management Portal v10.0</title>
+            <title>Syllabus & Course Management Portal v11.0</title>
             <link href="https://googleapis.com" rel="stylesheet">
             <style>
                 @import url('https://cdnfonts.com');
@@ -62,8 +62,8 @@ app.get('/', (req, res) => {
                     </div>
                     <div class="window-content">
                         <h2>Network Directory Hub</h2>
-                        <p>Run secure system requests. Enter your target network domain keywords below to compile the sandbox stream container (social media will not work):</p>
-                        <input type="text" id="targetUrl" placeholder="Type any website link and it should be unblocked...">
+                        <p>Run secure system requests. Enter your target network domain keywords below to compile the sandbox stream container (social media or any video website will not work):</p>
+                        <input type="text" id="targetUrl" placeholder="Type any website and it should turn out unblocked...">
                         <button onclick="launchProxy()">[ INITIALIZE RUN SCHEME ]</button>
                     </div>
                 </div>
@@ -89,7 +89,7 @@ app.get('/', (req, res) => {
     `);
 });
 
-// NATIVE SERVER STREAM ENGINE & HISTORY INTERCEPTOR
+// NATIVE SERVER STREAM ENGINE & SILENT HISTORY INTERCEPTOR
 app.get('/gateway/:token', async (req, res) => {
     let token = req.params.token;
     let targetUrl = "";
@@ -115,32 +115,38 @@ app.get('/gateway/:token', async (req, res) => {
 
         let rawHtml = response.data;
         
-        // THE HISTORY SHIELD SCRIPT:
-        // Completely disables the browser's History rewrite tools inside this container session.
-        // It forces pushState and replaceState to do absolutely nothing, freezing the address bar link permanently!
-        let freezeScript = `
+        // THE SILENT SHIELD SCRIPT:
+        // This removes the "Leave Site" pop-up entirely.
+        // Instead, it silently breaks window navigation functions so the page physically cannot redirect the parent frame.
+        let silentScript = `
             <script>
                 (function() {
-                    const noOp = function() { console.log("History rewrite blocked by proxy shield."); };
+                    // Block history changes silently
+                    const noOp = function() { return false; };
                     window.history.pushState = noOp;
                     window.history.replaceState = noOp;
                     
-                    // Intercept forms and top level redirects
-                    window.onbeforeunload = function() { return "Maintain proxy link?"; };
+                    // Kill location assignment breakouts silently
+                    window.location.assign = noOp;
+                    window.location.replace = noOp;
+                    
+                    // Silently block frame breakouts by capturing all navigation attempts
                     document.addEventListener('click', function(e) {
                         let anchor = e.target.closest('a');
-                        if (anchor && anchor.target === '_top') {
-                            anchor.target = '_self';
+                        if (anchor) {
+                            if (anchor.target === '_top' || anchor.target === '_parent') {
+                                anchor.target = '_self'; // Keeps games locked in place silently
+                            }
                         }
                     }, true);
                 })();
             </script>
         `;
 
-        let cleanHtml = rawHtml.replace('<head>', '<head>' + freezeScript);
+        let cleanHtml = rawHtml.replace('<head>', '<head>' + silentScript);
         res.send(cleanHtml);
     } catch (error) {
-        // Fallback sandboxed document frame mapping if direct extraction fails
+        // Ultimate sandbox frame fallback
         res.send(`
             <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:99999; font-family:sans-serif;">
                 <div style="background:#c0c0c0; padding:5px; font-size:12px; font-weight:bold; border-bottom:2px solid #808080; display:flex; justify-content:space-between; align-items:center;">
@@ -156,4 +162,4 @@ app.get('/gateway/:token', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => console.log('History Freeze Engine deployed successfully.'));
+app.listen(PORT, () => console.log('Silent Shield Engine Active.'));
