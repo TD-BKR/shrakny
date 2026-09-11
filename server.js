@@ -41,7 +41,6 @@ app.get('/', (req, res) => {
                     font-family: 'Perfect DOS VGA 437', monospace; font-weight: bold;
                 }
                 button { width: 100%; padding: 12px; background-color: #c0c0c0; color: #000; border: 3px solid; border-color: #fff #808080 #808080 #fff; cursor: pointer; font-size: 14px; font-weight: bold; font-family: 'Courier Prime', monospace; margin-top: 15px; }
-                button:active { border-color: #808080 #fff #fff #808080; }
             </style>
         </head>
         <body>
@@ -58,13 +57,13 @@ app.get('/', (req, res) => {
             <div class="container">
                 <div class="portal-card">
                     <div class="window-title-bar">
-                        <span>📚 Education Gateway Core Interface</span>
+                        <span>Education Gateway Core Interface</span>
                         <span style="background:#c0c0c0; color:black; padding:1px 5px; font-size:10px; border:1px solid #808080;">X</span>
                     </div>
                     <div class="window-content">
                         <h2>Network Directory Hub</h2>
                         <p>Run secure system requests. Enter your target network domain keywords below to compile the sandbox stream container:</p>
-                        <input type="text" id="targetUrl" placeholder="Type any website and it should be unblocked...">
+                        <input type="text" id="targetUrl" placeholder="Type poki.com or crazygames.com...">
                         <button onclick="launchProxy()">[ INITIALIZE RUN SCHEME ]</button>
                     </div>
                 </div>
@@ -90,33 +89,72 @@ app.get('/', (req, res) => {
     `);
 });
 
-// THE ENCRYPTED ROUTE PIPELINE
+// NATIVE SERVER STREAM ENGINE & INTERCEPTION LAYER
 app.get('/gateway/:token', async (req, res) => {
     let token = req.params.token;
     let targetUrl = "";
     
     try {
+        // Decode the URL inside the secure script
         targetUrl = Buffer.from(token, 'base64').toString('utf-8');
+        const parsedUrl = new URL(targetUrl);
         
-        // NEW ADVANCED EMBED SYSTEM: Instead of loading raw source data that can break out,
-        // we lock the target site inside a local window frame using an absolute proxy gateway.
-        // The sandbox parameter explicitly omits "allow-top-navigation", meaning the games
-        // CANNOT change your browser address bar link!
+        // Fetch the web data directly from the game host via your Render server
+        const response = await axios.get(parsedUrl.href, {
+            headers: { 
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+            },
+            timeout: 15000
+        });
+
+        // Strip defensive headers so it allows iframe rendering
+        res.removeHeader('X-Frame-Options');
+        res.removeHeader('Content-Security-Policy');
+        res.removeHeader('x-frame-options');
+        res.removeHeader('content-security-policy');
+        
+        res.setHeader('Content-Type', 'text/html');
+
+        // NAVIGATION SHIELD: Injects an internal window lock right into the page code.
+        // It hijacks 'beforeunload' and window assignment calls to prevent game clicks from changing the top URL bar.
+        let rawHtml = response.data;
+        let shieldScript = `
+            <script>
+                window.onbeforeunload = function() { return "Keep locked in proxy?"; };
+                Object.defineProperty(window, 'location', {
+                    writable: false,
+                    configurable: false
+                });
+                // Intercept anchor tags to keep them target="_self" or bounded
+                document.addEventListener('click', function(e) {
+                    let target = e.target.closest('a');
+                    if (target && target.target === '_top') {
+                        target.target = '_self';
+                    }
+                }, true);
+            </script>
+        `;
+
+        // Inject the shield script right after the head tag opens
+        let cleanHtml = rawHtml.replace('<head>', '<head>' + shieldScript);
+        
+        res.send(cleanHtml);
+    } catch (error) {
+        // Direct internal fallback frame using the source URL directly if the connection drops
         res.send(`
             <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:#000; z-index:99999; font-family:sans-serif;">
                 <div style="background:#c0c0c0; padding:5px; font-size:12px; font-weight:bold; border-bottom:2px solid #808080; display:flex; justify-content:space-between; align-items:center;">
-                    <span style="color:#000;">🔒 Secured Sandboxed Stream Frame</span>
+                    <span style="color:#000;">🔒 Secured Direct Stream Frame</span>
                     <a href="/" style="color:black; text-decoration:none; background:#d9d9d9; padding:2px 8px; border:1px solid #808080; font-size:11px; font-weight:bold;">[ EXIT PORTAL ]</a>
                 </div>
-                <iframe src="https://corsproxy.io{encodeURIComponent(targetUrl)}" 
+                <iframe src="${targetUrl}" 
                         style="width:100%; height:calc(100% - 25px); border:none; background:#fff;" 
                         sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-pointer-lock">
                 </iframe>
             </div>
         `);
-    } catch (error) {
-        res.status(500).send('Critical Gateway Error: Bridge pipe dropped.');
     }
 });
 
-app.listen(PORT, () => console.log('Bypass Lock Engine Fully Active.'));
+app.listen(PORT, () => console.log('Direct Proxy Engine operational without public hooks.'));
