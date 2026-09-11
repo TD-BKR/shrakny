@@ -11,10 +11,11 @@ app.get('/', (req, res) => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Syllabus & Course Management Portal v7.0</title>
+            <title>Shrakny</title>
             <link href="https://googleapis.com" rel="stylesheet">
             <style>
-                body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Courier Prime', monospace; background-color: #050515; position: relative; }
+               @import url('https://cdnfonts.com');
+ body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Courier Prime', monospace; background-color: #050515; position: relative; }
                 
                 /* FULL CONTAINER FOR THE LIVE MP4 CHROMATIC VIDEO LAYER */
                 .video-bg-wrapper {
@@ -33,7 +34,7 @@ app.get('/', (req, res) => {
                 /* GIANT ARCADE MARQUEE SMACK IN THE MIDDLE */
                 .giant-marquee-lane { position: absolute; top: 32%; width: 100%; overflow: hidden; white-space: nowrap; z-index: 5; pointer-events: none; }
                 .giant-mo-text {
-                    font-family: 'Press Start 2P', monospace; font-size: 80px; font-weight: bold; color: #00FFFF; display: inline-block; animation: skyFlyThrough 8s linear infinite; letter-spacing: 6px;
+                    font-family: 'Perfect DOS VGA 437', monospace; font-size: 80px; font-weight: bold; color: #00FFFF; display: inline-block; animation: skyFlyThrough 8s linear infinite; letter-spacing: 6px;
                     text-shadow: 0px 3px 0px #ffaa00, -1px 4px 0px #111122, -2px 6px 0px #111122, -3px 8px 0px #111122, -4px 10px 0px #111122, -5px 12px 0px #111122, -6px 14px 0px #111122, -7px 16px 0px #111122, -8px 18px 0px #111122, -12px 24px 10px rgba(0, 0, 0, 0.7);
                 }
                 @keyframes skyFlyThrough { 0% { transform: translateX(-100%); } 100% { transform: translateX(100vw); } }
