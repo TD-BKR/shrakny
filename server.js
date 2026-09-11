@@ -41,14 +41,14 @@ app.get('/', (req, res) => {
                 .container { position: absolute; top: 70%; left: 50%; transform: translate(-50%, -50%); width: 90%; max-width: 530px; z-index: 10; }
                 .portal-card { background: #c0c0c0; padding: 4px; border: 3px solid; border-color: #fff #808080 #808080 #fff; box-shadow: 5px 5px 30px rgba(0,0,0,0.8); }
                 .window-title-bar { background: linear-gradient(90deg, #000080, #1084d0); color: white; padding: 6px 10px; font-weight: bold; font-size: 13px; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; }
-                .window-content { padding: 22px; background: #d9d9d9; border: 2px solid; border-color: #808080 #fff #fff #808080; }
-                h2 { margin-top: 0; font-size: 16px; font-weight: bold; text-transform: uppercase; color: #000; }
-                p { color: #111; font-size: 11px; font-weight: bold; margin-bottom: 15px; }
+                .window-content { padding: 22px; background: #00000; border: 2px solid; border-color: #808080 #fff #fff #808080; }
+                h2 { margin-top: 0; font-size: 16px; font-weight: bold; text-transform: uppercase; color: #fff; }
+                p { color: #fff; font-size: 11px; font-weight: bold; margin-bottom: 15px; }
                 input[type="text"] { 
                 width: 100%; padding: 12px; border: 3px solid; border-color: #808080 #fff #fff #808080;
                 font-size: 14px; box-sizing: border-box;
                 background-color: #000000; 
-                color: #ffffff
+                color: #fff
                 font-family: 'Courier Prime', monospace; font-weight: bold; }
                 button { width: 100%; padding: 12px; background-color: #c0c0c0; color: #000; border: 3px solid; border-color: #fff #808080 #808080 #fff; cursor: pointer; font-size: 14px; font-weight: bold; font-family: 'Courier Prime', monospace; margin-top: 15px; }
             </style>
@@ -65,7 +65,7 @@ app.get('/', (req, res) => {
 
             <!-- GIANT MARQUEE TEXT RUNNING ACROSS THE CENTER -->
             <div class="giant-marquee-lane">
-                <div class="giant-mo-text">BY MO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MO &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MO</div>
+                <div class="giant-mo-text">BY MA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BY MA</div>
             </div>
 
             <!-- Central Form Panel Context -->
